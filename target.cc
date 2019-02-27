@@ -23,6 +23,7 @@ SSL_CTX *Init() {
                                      SSL_FILETYPE_PEM));
   return sctx;
 }
+
 extern "C" int FuzzerEntrypoint(const uint8_t *Data, size_t Size) {
   static SSL_CTX *sctx = Init();
   SSL *server = SSL_new(sctx);
