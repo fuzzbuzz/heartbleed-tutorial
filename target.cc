@@ -6,6 +6,9 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#include <iostream>
+#include <filesystem>
+
 SSL_CTX *Init() {
   SSL_library_init();
   SSL_load_error_strings();
@@ -17,10 +20,22 @@ SSL_CTX *Init() {
       openssl req -x509 -newkey rsa:512 -keyout server.key \
      -out server.pem -days 9999 -nodes -subj /CN=a/
   */
-  assert(SSL_CTX_use_certificate_file(sctx, "runtime/server.pem",
-                                      SSL_FILETYPE_PEM));
-  assert(SSL_CTX_use_PrivateKey_file(sctx, "runtime/server.key",
-                                     SSL_FILETYPE_PEM));
+  if (!SSL_CTX_use_certificate_file(sctx, "/home/cbrooks/work/heartbleed-tutorial/server.pem", SSL_FILETYPE_PEM)) {
+      ERR_set_mark();
+      int i = ERR_get_error();
+      char str[256];
+      ERR_error_string(i, str);
+      std::cout << str << std::endl;
+      assert(false);
+  }
+  if (!SSL_CTX_use_PrivateKey_file(sctx, "/home/cbrooks/work/heartbleed-tutorial/server.key", SSL_FILETYPE_PEM)) {
+      ERR_set_mark();
+      int i = ERR_get_error();
+      char str[256];
+      ERR_error_string(i, str);
+      std::cout << str << std::endl;
+      assert(false);
+  }
   return sctx;
 }
 

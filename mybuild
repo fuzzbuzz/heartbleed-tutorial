@@ -1,0 +1,9 @@
+#!/bin/bash
+
+(
+    cd openssl_src
+    make clean
+    ./config
+    make
+)
+clang++ -shared -fPIC target.cc -DCERT_PATH=\"$PWD/runtime\" openssl_src/libssl.a openssl_src/libcrypto.a -Iopenssl_src/include -o target.so
