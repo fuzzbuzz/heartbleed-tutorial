@@ -8,4 +8,4 @@ set -o pipefail
 
 cd openssl_src && CC="clang $CFLAGS" ./config && make clean && make
 cd ..
-$clang++ $CXXFLAGS ./target.cc -DCERT_PATH=\"$PWD/runtime\"  openssl_src/libssl.a openssl_src/libcrypto.a -fsanitize=fuzzer -I openssl_src/include -o ./target
+clang++ $CXXFLAGS ./target.cc -DCERT_PATH=\"$PWD/runtime\"  openssl_src/libssl.a openssl_src/libcrypto.a -fsanitize=fuzzer -I openssl_src/include -o ./target
