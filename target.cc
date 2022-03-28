@@ -24,7 +24,7 @@ SSL_CTX *Init() {
   return sctx;
 }
 
-extern "C" int FuzzerEntrypoint(const uint8_t *Data, size_t Size) {
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
   static SSL_CTX *sctx = Init();
   SSL *server = SSL_new(sctx);
   BIO *sinbio = BIO_new(BIO_s_mem());
