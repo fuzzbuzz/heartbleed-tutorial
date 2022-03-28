@@ -2,8 +2,8 @@ base:
   docker_image: ubuntu:16.04
   language: c++
   engine: libFuzzer
-  setup:
-    - sudo chmod 775 ./build.sh
-    - sudo apt-get -y update
-    - sudo apt-get -y install git make
-    - ./build.sh
+  steps:
+    - run: sudo chmod 775 ./build.sh
+    - run: sudo apt-get -y update
+    - run: sudo apt-get -y install git make
+    - run: ./build.sh
